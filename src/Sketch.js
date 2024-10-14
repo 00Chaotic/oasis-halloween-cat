@@ -24,7 +24,7 @@ function sketch(p5) {
     // Eyes
 
     // Calculate angle between mouse and canvas center
-    const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y), p5.mouseX - (centerToEdge.x + catCenter.x))
+    const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y - 75), p5.mouseX - (centerToEdge.x + catCenter.x))
 
     // Left eye position from center
     const leftX = catCenter.x - 75;

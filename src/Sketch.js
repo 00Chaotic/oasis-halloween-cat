@@ -5,7 +5,9 @@ import { ReactP5Wrapper } from "@p5-wrapper/react";
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  const canvasCenter = {x: window.innerWidth, y: window.innerHeight};
+  // Calculations consider (0, 0) default starting point of WebGL mode canvas
+  const centerToEdge = { x: p5.windowWidth/2, y: p5.windowHeight/2 };
+  const catCenter = {x: -centerToEdge.x*0.65, y: centerToEdge.y*0.7 };
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
@@ -14,7 +16,7 @@ function sketch(p5) {
 
   p5.draw = () => {
     // Calculate angle between mouse and canvas center
-    const angle = p5.atan2(p5.mouseY - (canvasCenter.y/2), p5.mouseX - (canvasCenter.x/2))
+    const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y), p5.mouseX - (centerToEdge.x + catCenter.x))
 
     // Left eye position from center
     const leftX = -50;

@@ -5,10 +5,11 @@ import { ReactP5Wrapper } from "@p5-wrapper/react";
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  // TODO: use for adding background image
-  // p5.preload = () => {
-  //   const bgImg = p5.loadImage();
-  // };
+  let bgImg;
+
+  p5.preload = () => {
+    bgImg = p5.loadImage("/assets/bg.gif");
+  };
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
@@ -16,7 +17,8 @@ function sketch(p5) {
   };
 
   p5.draw = () => {
-    p5.background(0);
+    // Background image
+    p5.image(bgImg, -p5.width / 2, -p5.height / 2, p5.width, p5.height);
 
     // Left eye position from center
     const leftX = -50;

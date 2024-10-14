@@ -5,16 +5,10 @@ import { ReactP5Wrapper } from "@p5-wrapper/react";
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  let isMousePressed = false;
-
   // TODO: use for adding background image
   // p5.preload = () => {
   //   const bgImg = p5.loadImage();
   // };
-
-  p5.mousePressed = () => {
-    isMousePressed = true
-  };
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);

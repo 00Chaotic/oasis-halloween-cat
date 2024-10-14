@@ -18,7 +18,7 @@ function sketch(p5) {
     // Face
     p5.push()
     p5.fill(20)
-    p5.ellipse(catCenter.x, catCenter.y, 520, 490);
+    p5.ellipse(catCenter.x, catCenter.y, 520, 490, 80);
     p5.pop()
 
     // Eyes

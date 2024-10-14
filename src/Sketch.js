@@ -20,19 +20,19 @@ function sketch(p5) {
     // Background image
     p5.image(bgImg, -p5.width / 2, -p5.height / 2, p5.width, p5.height);
 
+    // Calculate angle between left eye and mouse
+    const angle = p5.atan2(p5.mouseY - (p5.windowHeight/2), p5.mouseX - (p5.windowWidth/2))
+
     // Left eye position from center
     const leftX = -50;
     const leftY = 0;
-
-    // Calculate angle between left eye and mouse
-    const leftAngle = p5.atan2(p5.mouseY - (p5.windowHeight/2+leftY), p5.mouseX - (p5.windowWidth/2+leftX));
 
     // Draw left eye
     p5.push();
     p5.translate(leftX, leftY);
     p5.fill(255);
     p5.ellipse(0, 0, 50, 50);
-    p5.rotate(leftAngle);
+    p5.rotate(angle);
     p5.fill(0);
     p5.ellipse(12.5, 0, 25, 25);
     p5.pop();
@@ -41,15 +41,12 @@ function sketch(p5) {
     const rightX = 50;
     const rightY = 0;
 
-    // Calculate angle between right eye and angle
-    const  rightAngle = p5.atan2(p5.mouseY - (p5.windowHeight/2+rightY), p5.mouseX - (p5.windowWidth/2+rightX));
-
     // Draw right eye
     p5.push();
     p5.translate(rightX, rightY);
     p5.fill(255);
     p5.ellipse(0, 0, 50, 50);
-    p5.rotate(rightAngle);
+    p5.rotate(angle);
     p5.fill(0);
     p5.ellipse(12.5, 0, 25, 25);
     p5.pop();

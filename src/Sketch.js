@@ -57,7 +57,7 @@ function sketch(p5) {
     // Add arcs to make eyes look angry when mouse is pressed
     if (p5.mouseIsPressed) {
       p5.push();
-      p5.fill(20);
+      p5.fill(30);
       p5.arc(leftX, leftY, 75, 75, 190, 10, p5.OPEN); // Left eye arc
       p5.arc(rightX, rightY, 75, 75, 170, 350, p5.OPEN); // Right eye arc
       p5.pop();

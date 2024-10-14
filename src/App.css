@@ -1,3 +1,5 @@
-/* May be used for styling later */
-
-.App {}
+.App {
+  background-image: url('/public/assets/bg.gif');
+  background-position: center;
+  background-size: cover;
+}

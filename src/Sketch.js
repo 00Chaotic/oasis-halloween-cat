@@ -5,21 +5,12 @@ import { ReactP5Wrapper } from "@p5-wrapper/react";
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  let bgImg;
-
-  p5.preload = () => {
-    bgImg = p5.loadImage("/assets/bg.gif");
-  };
-
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.angleMode(p5.DEGREES);
   };
 
   p5.draw = () => {
-    // Background image
-    p5.image(bgImg, -p5.width / 2, -p5.height / 2, p5.width, p5.height);
-
     // Calculate angle between left eye and mouse
     const angle = p5.atan2(p5.mouseY - (p5.windowHeight/2), p5.mouseX - (p5.windowWidth/2))
 

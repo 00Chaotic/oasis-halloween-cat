@@ -15,43 +15,51 @@ function sketch(p5) {
   };
 
   p5.draw = () => {
+    // Face
+    p5.push()
+    p5.fill(20)
+    p5.ellipse(catCenter.x, catCenter.y, 520, 490);
+    p5.pop()
+
+    // Eyes
+
     // Calculate angle between mouse and canvas center
     const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y), p5.mouseX - (centerToEdge.x + catCenter.x))
 
     // Left eye position from center
-    const leftX = -50;
-    const leftY = 0;
+    const leftX = catCenter.x - 75;
+    const leftY = catCenter.y - 75;
 
     // Draw left eye
     p5.push();
     p5.translate(leftX, leftY);
     p5.fill(255);
-    p5.ellipse(0, 0, 50, 50);
+    p5.ellipse(0, 0, 75, 75);
     p5.rotate(angle);
     p5.fill(0);
-    p5.ellipse(12.5, 0, 25, 25);
+    p5.ellipse(12.5, 0, 40, 40);
     p5.pop();
 
     // Right eye position from center
-    const rightX = 50;
-    const rightY = 0;
+    const rightX = catCenter.x + 75;
+    const rightY = catCenter.y - 75;
 
     // Draw right eye
     p5.push();
     p5.translate(rightX, rightY);
     p5.fill(255);
-    p5.ellipse(0, 0, 50, 50);
+    p5.ellipse(0, 0, 75, 75);
     p5.rotate(angle);
     p5.fill(0);
-    p5.ellipse(12.5, 0, 25, 25);
+    p5.ellipse(12.5, 0, 40, 40);
     p5.pop();
 
     // Add arcs to make eyes look angry when mouse is pressed
     if (p5.mouseIsPressed) {
       p5.push();
       p5.fill(20);
-      p5.arc(-50, 0, 50, 50, 190, 10, p5.OPEN); // Left eye arc
-      p5.arc(50, 0, 50, 50, 170, 350, p5.OPEN); // Right eye arc
+      p5.arc(leftX, leftY, 75, 75, 190, 10, p5.OPEN); // Left eye arc
+      p5.arc(rightX, rightY, 75, 75, 170, 350, p5.OPEN); // Right eye arc
       p5.pop();
     }
   };

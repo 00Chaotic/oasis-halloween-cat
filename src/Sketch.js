@@ -79,7 +79,7 @@ function sketch(p5) {
     const rightEyeY = catCenter.y - 75;
 
     // Add arcs to make eyes look closed/happy when mouse is held down
-    if (p5.mouseIsPressed) {
+    if (p5.mouseIsPressed && isMouseInRadius(p5, catCenter.x, catCenter.y, 420)) {
       p5.push();
       p5.noFill();
       p5.strokeWeight(5);
@@ -111,6 +111,15 @@ function sketch(p5) {
       p5.pop();
     }
   };
+}
+
+function isMouseInRadius(p5, centerX, centerY, radius) {
+  const adjustedX = p5.mouseX - p5.width / 2;
+  const adjustedY = p5.mouseY - p5.height / 2;
+
+  const dist = p5.dist(adjustedX, adjustedY, centerX, centerY);
+
+  return dist <= radius;
 }
 
 export default function Sketch() {

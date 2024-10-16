@@ -12,29 +12,29 @@ const catCenter = {
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
+  let catGraphics;
+
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.angleMode(p5.DEGREES);
+
+    // Create an off-screen graphics buffer
+    catGraphics = p5.createGraphics(p5.width, p5.height, p5.WEBGL);
+    catGraphics.angleMode(p5.DEGREES);
+
+    // Pre-render static graphics
+    drawFace(catGraphics, 520);
+    drawFur(catGraphics, 520);
+    drawEars(catGraphics, 180, 170, 170, 370, 30, 240);
+    drawWhiskers(catGraphics);
+    drawNose(catGraphics, -25, 0, 25, 0, 0, 30, 'pink');
+    drawMouth(catGraphics, 50, 30, 100, 75);
+    drawFangs(catGraphics, 50, 67, 30, 65, 40, 90);
   };
 
   p5.draw = () => {
-    // Face
-    drawFace(p5, 520);
-
-    // Ears
-    drawEars(p5, 180, 170, 170, 370, 30, 240);
-
-    // Whiskers
-    drawWhiskers(p5);
-
-    // Nose
-    drawNose(p5, -25, 0, 25, 0, 0, 30, 'pink');
-
-    // Mouth
-    drawMouth(p5, 50, 30, 100, 75);
-
-    // Fangs
-    drawFangs(p5, 50, 67, 30, 65, 40, 90);
+    // Display pre-rendered buffer
+    p5.image(catGraphics, -p5.width / 2, -p5.height / 2);
 
     // Eyes
     const eyeOffset = 75;
@@ -58,7 +58,39 @@ function sketch(p5) {
 function drawFace(p5, radius) {
   p5.push();
   p5.fill(20);
+  p5.noStroke();
   p5.ellipse(catCenter.x, catCenter.y, radius, radius, 80);
+  p5.pop();
+}
+
+/**
+ * Draws fur on cat face.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} radius - Radius of cat face
+ */
+function drawFur(p5, radius) {
+  p5.push();
+  p5.stroke(50);
+
+  // Generate fur strokes
+  for (let i = 0; i < 5000; i++) {
+    let angle = p5.random(0, 360); // Random angle in degrees
+
+    // Random radius inside cat face using a square root for even distribution
+    let r = p5.sqrt(p5.random()) * 0.5; // Scales points towards the center
+    let posX = catCenter.x + r * p5.cos(angle) * radius;
+    let posY = catCenter.y + r * p5.sin(angle) * radius;
+
+    // Calculate offset for the fur strands to create outward growth
+    let furLength = p5.random(2, 5); // Random length of fur strand
+    let offsetX = posX + p5.cos(angle) * furLength;
+    let offsetY = posY + p5.sin(angle) * furLength;
+
+    // Random stroke weight for natural variation
+    p5.strokeWeight(p5.random(1, 2));
+    p5.line(posX, posY, offsetX, offsetY); // Draw individual fur strand
+  }
+
   p5.pop();
 }
 

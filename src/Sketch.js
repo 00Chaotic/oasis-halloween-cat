@@ -71,43 +71,43 @@ function sketch(p5) {
 
     // Eyes
 
-    // Calculate angle between mouse and canvas center
-    const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y - 75), p5.mouseX - (centerToEdge.x + catCenter.x));
-
     // Left eye position from center
-    const leftX = catCenter.x - 75;
-    const leftY = catCenter.y - 75;
-
-    // Draw left eye
-    p5.push();
-    p5.translate(leftX, leftY);
-    p5.fill(255);
-    p5.ellipse(0, 0, 75, 75);
-    p5.rotate(angle);
-    p5.fill(0);
-    p5.ellipse(12.5, 0, 40, 40);
-    p5.pop();
-
+    const leftEyeX = catCenter.x - 75;
+    const leftEyeY = catCenter.y - 75;
     // Right eye position from center
-    const rightX = catCenter.x + 75;
-    const rightY = catCenter.y - 75;
+    const rightEyeX = catCenter.x + 75;
+    const rightEyeY = catCenter.y - 75;
 
-    // Draw right eye
-    p5.push();
-    p5.translate(rightX, rightY);
-    p5.fill(255);
-    p5.ellipse(0, 0, 75, 75);
-    p5.rotate(angle);
-    p5.fill(0);
-    p5.ellipse(12.5, 0, 40, 40);
-    p5.pop();
-
-    // Add arcs to make eyes look angry when mouse is pressed
+    // Add arcs to make eyes look closed/happy when mouse is held down
     if (p5.mouseIsPressed) {
       p5.push();
-      p5.fill(30);
-      p5.arc(leftX, leftY, 75, 75, 190, 10, p5.OPEN); // Left eye arc
-      p5.arc(rightX, rightY, 75, 75, 170, 350, p5.OPEN); // Right eye arc
+      p5.noFill();
+      p5.strokeWeight(5);
+      p5.arc(leftEyeX, leftEyeY, 75, 75, 180, 360, p5.OPEN); // Left eye arc
+      p5.arc(rightEyeX, rightEyeY, 75, 75, 180, 360, p5.OPEN); // Right eye arc
+      p5.pop();
+    } else {
+      // Calculate angle between mouse and eyes center
+      const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y - 75), p5.mouseX - (centerToEdge.x + catCenter.x));
+
+      // Draw left eye
+      p5.push();
+      p5.fill(255);
+      p5.translate(leftEyeX, leftEyeY);
+      p5.ellipse(0, 0, 75, 75);
+      p5.rotate(angle);
+      p5.fill(0);
+      p5.ellipse(12.5, 0, 40, 40);
+      p5.pop();
+
+      // Draw right eye
+      p5.push();
+      p5.translate(rightEyeX, rightEyeY);
+      p5.fill(255);
+      p5.ellipse(0, 0, 75, 75);
+      p5.rotate(angle);
+      p5.fill(0);
+      p5.ellipse(12.5, 0, 40, 40);
       p5.pop();
     }
   };

@@ -9,7 +9,7 @@ function sketch(p5) {
   const centerToEdge = { x: p5.windowWidth/2, y: p5.windowHeight/2 };
   const catCenter = {
     x: -centerToEdge.x*0.65,
-    y: centerToEdge.y*0.7
+    y: centerToEdge.y*0.7,
   };
 
   p5.setup = () => {
@@ -19,19 +19,19 @@ function sketch(p5) {
 
   p5.draw = () => {
     // Face
-    p5.push()
-    p5.fill(20)
+    p5.push();
+    p5.fill(20);
     p5.ellipse(catCenter.x, catCenter.y, 520, 490, 80);
-    p5.pop()
+    p5.pop();
 
     // Ears
-    p5.push()
-    p5.fill('pink')
-    p5.stroke(20)
-    p5.strokeWeight(15)
-    p5.triangle(catCenter.x-180, catCenter.y-170, catCenter.x-170, catCenter.y-370, catCenter.x-30, catCenter.y-240) // Left ear
-    p5.triangle(catCenter.x+180, catCenter.y-170, catCenter.x+170, catCenter.y-370, catCenter.x+30, catCenter.y-240) // Right ear
-    p5.pop()
+    p5.push();
+    p5.fill('pink');
+    p5.stroke(20);
+    p5.strokeWeight(15);
+    p5.triangle(catCenter.x-180, catCenter.y-170, catCenter.x-170, catCenter.y-370, catCenter.x-30, catCenter.y-240); // Left ear
+    p5.triangle(catCenter.x+180, catCenter.y-170, catCenter.x+170, catCenter.y-370, catCenter.x+30, catCenter.y-240); // Right ear
+    p5.pop();
 
     // Whiskers
     p5.push();
@@ -65,7 +65,7 @@ function sketch(p5) {
     // Eyes
 
     // Calculate angle between mouse and canvas center
-    const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y - 75), p5.mouseX - (centerToEdge.x + catCenter.x))
+    const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y - 75), p5.mouseX - (centerToEdge.x + catCenter.x));
 
     // Left eye position from center
     const leftX = catCenter.x - 75;

@@ -24,6 +24,14 @@ function sketch(p5) {
     p5.ellipse(catCenter.x, catCenter.y, 520, 490, 80);
     p5.pop()
 
+    // Ears
+    p5.push()
+    p5.fill(20)
+    p5.noStroke()
+    p5.triangle(catCenter.x-180, catCenter.y-170, catCenter.x-170, catCenter.y-370, catCenter.x-30, catCenter.y-240) // Left ear
+    p5.triangle(catCenter.x+180, catCenter.y-170, catCenter.x+170, catCenter.y-370, catCenter.x+30, catCenter.y-240) // Right ear
+    p5.pop()
+
     // Eyes
 
     // Calculate angle between mouse and canvas center

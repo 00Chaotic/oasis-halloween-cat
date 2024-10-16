@@ -1,17 +1,17 @@
 import { ReactP5Wrapper } from "@p5-wrapper/react";
 
+// Calculations consider (0, 0) default starting point of WebGL mode canvas
+const centerToEdge = { x: window.innerWidth/2, y: window.innerHeight/2 };
+const catCenter = {
+  x: -centerToEdge.x*0.65,
+  y: centerToEdge.y*0.7,
+};
+
 /**
- * Sketch function for p5.js
+ * Sketch function for p5.js.
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  // Calculations consider (0, 0) default starting point of WebGL mode canvas
-  const centerToEdge = { x: p5.windowWidth/2, y: p5.windowHeight/2 };
-  const catCenter = {
-    x: -centerToEdge.x*0.65,
-    y: centerToEdge.y*0.7,
-  };
-
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.angleMode(p5.DEGREES);
@@ -19,105 +19,202 @@ function sketch(p5) {
 
   p5.draw = () => {
     // Face
-    p5.push();
-    p5.fill(20);
-    p5.ellipse(catCenter.x, catCenter.y, 520, 490, 80);
-    p5.pop();
+    drawFace(p5, 520);
 
     // Ears
-    p5.push();
-    p5.fill('pink');
-    p5.stroke(20);
-    p5.strokeWeight(15);
-    p5.triangle(catCenter.x-180, catCenter.y-170, catCenter.x-170, catCenter.y-370, catCenter.x-30, catCenter.y-240); // Left ear
-    p5.triangle(catCenter.x+180, catCenter.y-170, catCenter.x+170, catCenter.y-370, catCenter.x+30, catCenter.y-240); // Right ear
-    p5.pop();
+    drawEars(p5, 180, 170, 170, 370, 30, 240);
 
     // Whiskers
-    p5.push();
-    p5.noFill();
-    p5.stroke(255);
-    p5.strokeWeight(4);
-    // Left whiskers
-    p5.arc(catCenter.x+300, catCenter.y, 250, 50, 180, 300, p5.OPEN);
-    p5.arc(catCenter.x+250, catCenter.y+30, 150, 10, 180, 0, p5.OPEN);
-    p5.arc(catCenter.x+300, catCenter.y+60, 250, 40, 50, 180, p5.OPEN);
-    // Right whiskers
-    p5.arc(catCenter.x-300, catCenter.y, 250, 50, 240, 0, p5.OPEN);
-    p5.arc(catCenter.x-250, catCenter.y+30, 150, 10, 180, 0, p5.OPEN);
-    p5.arc(catCenter.x-300, catCenter.y+60, 250, 50, 0, 120, p5.OPEN);
-    p5.pop();
+    drawWhiskers(p5);
 
     // Nose
-    p5.push();
-    p5.fill('pink');
-    p5.triangle(catCenter.x-25, catCenter.y, catCenter.x+25, catCenter.y, catCenter.x, catCenter.y+30);
-    p5.pop();
+    drawNose(p5, -25, 0, 25, 0, 0, 30, 'pink');
 
     // Mouth
-    p5.push();
-    p5.noFill();
-    p5.stroke(255);
-    p5.arc(catCenter.x-50, catCenter.y+30, 100, 75, 0, 100, p5.OPEN);
-    p5.arc(catCenter.x+50, catCenter.y+30, 100, 75, 80, 180, p5.OPEN);
-    p5.pop();
+    drawMouth(p5, 50, 30, 100, 75);
 
     // Fangs
-    p5.push();
-    p5.noStroke();
-    p5.triangle(catCenter.x-50, catCenter.y+67, catCenter.x-30, catCenter.y+65, catCenter.x-40, catCenter.y+90);
-    p5.triangle(catCenter.x+50, catCenter.y+67, catCenter.x+30, catCenter.y+65, catCenter.x+40, catCenter.y+90);
-    p5.pop();
+    drawFangs(p5, 50, 67, 30, 65, 40, 90);
 
     // Eyes
-
-    // Left eye position from center
-    const leftEyeX = catCenter.x - 75;
-    const leftEyeY = catCenter.y - 75;
-    // Right eye position from center
-    const rightEyeX = catCenter.x + 75;
-    const rightEyeY = catCenter.y - 75;
+    const eyeOffset = 75;
+    const eyeRadius = 75;
+    const leftEyeCoords = { x: catCenter.x - eyeOffset, y: catCenter.y - eyeOffset };
+    const rightEyeCoords = { x: catCenter.x + eyeOffset, y: catCenter.y - eyeOffset };
 
     // Add arcs to make eyes look closed/happy when mouse is held down
-    if (p5.mouseIsPressed && isMouseInRadius(p5, catCenter.x, catCenter.y, 420)) {
-      p5.push();
-      p5.noFill();
-      p5.strokeWeight(5);
-      p5.arc(leftEyeX, leftEyeY, 75, 75, 180, 360, p5.OPEN); // Left eye arc
-      p5.arc(rightEyeX, rightEyeY, 75, 75, 180, 360, p5.OPEN); // Right eye arc
-      p5.pop();
+    if (p5.mouseIsPressed && isMouseInRadius(p5, 420)) {
+      drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, eyeRadius);
     } else {
-      // Calculate angle between mouse and eyes center
-      const angle = p5.atan2(p5.mouseY - (centerToEdge.y + catCenter.y - 75), p5.mouseX - (centerToEdge.x + catCenter.x));
-
-      // Draw left eye
-      p5.push();
-      p5.fill(255);
-      p5.translate(leftEyeX, leftEyeY);
-      p5.ellipse(0, 0, 75, 75);
-      p5.rotate(angle);
-      p5.fill(0);
-      p5.ellipse(12.5, 0, 40, 40);
-      p5.pop();
-
-      // Draw right eye
-      p5.push();
-      p5.translate(rightEyeX, rightEyeY);
-      p5.fill(255);
-      p5.ellipse(0, 0, 75, 75);
-      p5.rotate(angle);
-      p5.fill(0);
-      p5.ellipse(12.5, 0, 40, 40);
-      p5.pop();
+      drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, eyeRadius);
     }
   };
 }
 
-function isMouseInRadius(p5, centerX, centerY, radius) {
+/**
+ * Draws cat face using an ellipse.
+ * @param {import("p5")} p5 - The p5 instance
+ */
+function drawFace(p5, radius) {
+  p5.push();
+  p5.fill(20);
+  p5.ellipse(catCenter.x, catCenter.y, radius, radius, 80);
+  p5.pop();
+}
+
+/**
+ * Draws cat ears using mirrored triangles.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} x1 - Bottom left x offset for both triangles (mirrored)
+ * @param {number} y1 - Bottom left y offset for both triangles
+ * @param {number} x2 - Bottom right x offset for both triangles (mirrored)
+ * @param {number} y2 - Bottom right y offset for both triangles
+ * @param {number} x3 - Top x offset for both triangles (mirrored)
+ * @param {number} y3 - Top y offset for both triangles
+ */
+function drawEars(p5, x1, y1, x2, y2, x3, y3) {
+  p5.push();
+  p5.fill('pink');
+  p5.stroke(20);
+  p5.strokeWeight(15);
+  p5.triangle(catCenter.x-x1, catCenter.y-y1, catCenter.x-x2, catCenter.y-y2, catCenter.x-x3, catCenter.y-y3); // Left ear
+  p5.triangle(catCenter.x+x1, catCenter.y-y1, catCenter.x+x2, catCenter.y-y2, catCenter.x+x3, catCenter.y-y3); // Right ear
+  p5.pop();
+}
+
+/**
+ * Draws cat whiskers using mirrored arcs. Coords are kept static to simplify implementation
+ * as this function is only expected to be used once anyway.
+ * @param {import("p5")} p5 - The p5 instance
+ */
+function drawWhiskers(p5) {
+  p5.push();
+  p5.noFill();
+  p5.stroke(255);
+  p5.strokeWeight(4);
+  // Left whiskers
+  p5.arc(catCenter.x+300, catCenter.y, 250, 50, 180, 300, p5.OPEN);
+  p5.arc(catCenter.x+250, catCenter.y+30, 150, 10, 180, 0, p5.OPEN);
+  p5.arc(catCenter.x+300, catCenter.y+60, 250, 40, 50, 180, p5.OPEN);
+  // Right whiskers
+  p5.arc(catCenter.x-300, catCenter.y, 250, 50, 240, 0, p5.OPEN);
+  p5.arc(catCenter.x-250, catCenter.y+30, 150, 10, 180, 0, p5.OPEN);
+  p5.arc(catCenter.x-300, catCenter.y+60, 250, 50, 0, 120, p5.OPEN);
+  p5.pop();
+}
+
+/**
+ * Draws cat nose using triangle.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} x1 - Top left x offset
+ * @param {number} y1 - Top left y offset
+ * @param {number} x2 - Top right x offset
+ * @param {number} y2 - Top right y offset
+ * @param {number} x3 - Bottom x offset
+ * @param {number} y3 - Bottom x offset
+ * @param {string} colour - Nose colour (e.g. `pink`)
+ */
+function drawNose(p5, x1, y1, x2, y2, x3, y3, colour) {
+  p5.push();
+  p5.fill(colour);
+  p5.triangle(catCenter.x+x1, catCenter.y+y1, catCenter.x+x2, catCenter.y+y2, catCenter.x+x3, catCenter.y+y3);
+  p5.pop();
+}
+
+/**
+ * Draws cat mouth using mirrored arcs.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} x - x offset for arc centers
+ * @param {number} y - y offset for arc centers
+ * @param {number} w - Width for each arc
+ * @param {number} h - Height for each arc
+ */
+function drawMouth(p5, x, y, w, h) {
+  p5.push();
+  p5.noFill();
+  p5.stroke(255);
+  p5.arc(catCenter.x-x, catCenter.y+y, w, h, 0, 100, p5.OPEN);
+  p5.arc(catCenter.x+x, catCenter.y+y, w, h, 80, 180, p5.OPEN);
+  p5.pop();
+}
+
+/**
+ * Draws fangs under cat mouth using mirrored triangles.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} x1 - Bottom left x offset for both triangles (mirrored)
+ * @param {number} y1 - Bottom left y offset for both triangles
+ * @param {number} x2 - Bottom right x offset for both triangles (mirrored)
+ * @param {number} y2 - Bottom right y offset for both triangles
+ * @param {number} x3 - Top x offset for both triangles (mirrored)
+ * @param {number} y3 - Top y offset for both triangles
+ */
+function drawFangs(p5, x1, y1, x2, y2, x3, y3) {
+  p5.push();
+  p5.noStroke();
+  p5.triangle(catCenter.x-x1, catCenter.y+y1, catCenter.x-x2, catCenter.y+y2, catCenter.x-x3, catCenter.y+y3);
+  p5.triangle(catCenter.x+x1, catCenter.y+y1, catCenter.x+x2, catCenter.y+y2, catCenter.x+x3, catCenter.y+y3);
+  p5.pop();
+}
+
+/**
+ * Draws open cat eyes using mirrored ellipses.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {{x: number, y: number}} leftEyeCoords - Coords for the center of the left eye
+ * @param {{x: number, y: number}} rightEyeCoords - Coords for the center of the right eye
+ * @param {number} radius - Radius of the (outer) eye ellipses
+ */
+function drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, radius) {
+  // Calculate angle between mouse and eyes center
+  const angle = p5.atan2(p5.mouseY - (centerToEdge.y + leftEyeCoords.y), p5.mouseX - centerToEdge.x - ((leftEyeCoords.x + rightEyeCoords.x) / 2));
+
+  // Draw left eye
+  p5.push();
+  p5.fill(255);
+  p5.translate(leftEyeCoords.x, leftEyeCoords.y);
+  p5.ellipse(0, 0, radius, radius);
+  p5.rotate(angle);
+  p5.fill(0);
+  p5.ellipse(12.5, 0, radius/1.8, radius/1.8);
+  p5.pop();
+
+  // Draw right eye
+  p5.push();
+  p5.translate(rightEyeCoords.x, rightEyeCoords.y);
+  p5.fill(255);
+  p5.ellipse(0, 0, radius, radius);
+  p5.rotate(angle);
+  p5.fill(0);
+  p5.ellipse(12.5, 0, radius/1.8, radius/1.8);
+  p5.pop();
+}
+
+/**
+ * Draws closed happy cat eyes using mirrored arcs.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {{x: number, y: number}} leftEyeCoords - Coords for the center of the left eye
+ * @param {{x: number, y: number}} rightEyeCoords - Coords for the center of the right eye
+ * @param {number} radius - Radius of the eye/arcs
+ */
+function drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, radius) {
+  p5.push();
+  p5.noFill();
+  p5.strokeWeight(5);
+  p5.arc(leftEyeCoords.x, leftEyeCoords.y, radius, radius, 180, 360, p5.OPEN); // Left eye arc
+  p5.arc(rightEyeCoords.x, rightEyeCoords.y, radius, radius, 180, 360, p5.OPEN); // Right eye arc
+  p5.pop();
+}
+
+/**
+ * Checks whether user's mouse position is within specified radius.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} radius - Radius to match against
+ * @returns {boolean} Whether user's mouse is radius
+ */
+function isMouseInRadius(p5, radius) {
   const adjustedX = p5.mouseX - p5.width / 2;
   const adjustedY = p5.mouseY - p5.height / 2;
 
-  const dist = p5.dist(adjustedX, adjustedY, centerX, centerY);
+  const dist = p5.dist(adjustedX, adjustedY, catCenter.x, catCenter.y);
 
   return dist <= radius;
 }

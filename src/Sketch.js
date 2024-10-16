@@ -32,6 +32,35 @@ function sketch(p5) {
     p5.triangle(catCenter.x+180, catCenter.y-170, catCenter.x+170, catCenter.y-370, catCenter.x+30, catCenter.y-240) // Right ear
     p5.pop()
 
+    // Whiskers
+    p5.push();
+    p5.noFill();
+    p5.stroke(255);
+    p5.strokeWeight(4);
+    // Left whiskers
+    p5.arc(catCenter.x+300, catCenter.y, 250, 50, 180, 300, p5.OPEN);
+    p5.arc(catCenter.x+250, catCenter.y+30, 150, 10, 180, 0, p5.OPEN);
+    p5.arc(catCenter.x+300, catCenter.y+60, 250, 40, 50, 180, p5.OPEN);
+    // Right whiskers
+    p5.arc(catCenter.x-300, catCenter.y, 250, 50, 240, 0, p5.OPEN);
+    p5.arc(catCenter.x-250, catCenter.y+30, 150, 10, 180, 0, p5.OPEN);
+    p5.arc(catCenter.x-300, catCenter.y+60, 250, 50, 0, 120, p5.OPEN);
+    p5.pop();
+
+    // Nose
+    p5.push();
+    p5.fill('pink');
+    p5.triangle(catCenter.x-25, catCenter.y, catCenter.x+25, catCenter.y, catCenter.x, catCenter.y+30);
+    p5.pop();
+
+    // Mouth
+    p5.push();
+    p5.noFill();
+    p5.stroke(255);
+    p5.arc(catCenter.x-50, catCenter.y+30, 100, 75, 0, 100, p5.OPEN);
+    p5.arc(catCenter.x+50, catCenter.y+30, 100, 75, 80, 180, p5.OPEN);
+    p5.pop();
+
     // Eyes
 
     // Calculate angle between mouse and canvas center

@@ -7,7 +7,10 @@ import { ReactP5Wrapper } from "@p5-wrapper/react";
 function sketch(p5) {
   // Calculations consider (0, 0) default starting point of WebGL mode canvas
   const centerToEdge = { x: p5.windowWidth/2, y: p5.windowHeight/2 };
-  const catCenter = {x: -centerToEdge.x*0.65, y: centerToEdge.y*0.7 };
+  const catCenter = {
+    x: -centerToEdge.x*0.65,
+    y: centerToEdge.y*0.7
+  };
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);

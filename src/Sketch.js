@@ -62,6 +62,13 @@ function sketch(p5) {
     p5.arc(catCenter.x+50, catCenter.y+30, 100, 75, 80, 180, p5.OPEN);
     p5.pop();
 
+    // Fangs
+    p5.push();
+    p5.noStroke();
+    p5.triangle(catCenter.x-50, catCenter.y+67, catCenter.x-30, catCenter.y+65, catCenter.x-40, catCenter.y+90);
+    p5.triangle(catCenter.x+50, catCenter.y+67, catCenter.x+30, catCenter.y+65, catCenter.x+40, catCenter.y+90);
+    p5.pop();
+
     // Eyes
 
     // Calculate angle between mouse and canvas center

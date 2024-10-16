@@ -25,7 +25,7 @@ function sketch(p5) {
     // Pre-render static graphics
     drawFace(catGraphics, 520);
     drawFur(catGraphics, 520);
-    drawEars(catGraphics, 180, 170, 170, 370, 30, 240);
+    drawEars(catGraphics, 180, 180, 180, 370, 30, 250);
     drawWhiskers(catGraphics);
     drawNose(catGraphics, -25, 0, 25, 0, 0, 30, 'pink');
     drawMouth(catGraphics, 50, 30, 100, 75);
@@ -97,18 +97,18 @@ function drawFur(p5, radius) {
 /**
  * Draws cat ears using mirrored triangles.
  * @param {import("p5")} p5 - The p5 instance
- * @param {number} x1 - Bottom left x offset for both triangles (mirrored)
- * @param {number} y1 - Bottom left y offset for both triangles
- * @param {number} x2 - Bottom right x offset for both triangles (mirrored)
- * @param {number} y2 - Bottom right y offset for both triangles
- * @param {number} x3 - Top x offset for both triangles (mirrored)
- * @param {number} y3 - Top y offset for both triangles
+ * @param {number} x1 - Outer bottom x offset for both triangles (mirrored)
+ * @param {number} y1 - Outer bottom y offset for both triangles
+ * @param {number} x2 - Top x offset for both triangles (mirrored)
+ * @param {number} y2 - Top y offset for both triangles
+ * @param {number} x3 - Inner bottom x offset for both triangles (mirrored)
+ * @param {number} y3 - Inner bottom y offset for both triangles
  */
 function drawEars(p5, x1, y1, x2, y2, x3, y3) {
   p5.push();
   p5.fill('pink');
   p5.stroke(20);
-  p5.strokeWeight(15);
+  p5.strokeWeight(10);
   p5.triangle(catCenter.x-x1, catCenter.y-y1, catCenter.x-x2, catCenter.y-y2, catCenter.x-x3, catCenter.y-y3); // Left ear
   p5.triangle(catCenter.x+x1, catCenter.y-y1, catCenter.x+x2, catCenter.y-y2, catCenter.x+x3, catCenter.y-y3); // Right ear
   p5.pop();

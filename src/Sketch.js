@@ -26,8 +26,9 @@ function sketch(p5) {
 
     // Ears
     p5.push()
-    p5.fill(20)
-    p5.noStroke()
+    p5.fill('pink')
+    p5.stroke(20)
+    p5.strokeWeight(15)
     p5.triangle(catCenter.x-180, catCenter.y-170, catCenter.x-170, catCenter.y-370, catCenter.x-30, catCenter.y-240) // Left ear
     p5.triangle(catCenter.x+180, catCenter.y-170, catCenter.x+170, catCenter.y-370, catCenter.x+30, catCenter.y-240) // Right ear
     p5.pop()

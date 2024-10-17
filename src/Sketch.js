@@ -30,6 +30,7 @@ function sketch(p5) {
     drawNose(catGraphics, -25, 0, 25, 0, 0, 30, 'pink');
     drawMouth(catGraphics, 50, 30, 100, 75);
     drawFangs(catGraphics, 50, 67, 30, 65, 40, 90);
+    drawPaws(catGraphics, 200, (centerToEdge.y / 2)-110);
   };
 
   p5.draw = () => {
@@ -185,6 +186,49 @@ function drawFangs(p5, x1, y1, x2, y2, x3, y3) {
   p5.noStroke();
   p5.triangle(catCenter.x-x1, catCenter.y+y1, catCenter.x-x2, catCenter.y+y2, catCenter.x-x3, catCenter.y+y3);
   p5.triangle(catCenter.x+x1, catCenter.y+y1, catCenter.x+x2, catCenter.y+y2, catCenter.x+x3, catCenter.y+y3);
+  p5.pop();
+}
+
+/**
+ * Draws mirrored cat paws at the bottom of the cat/screen.
+ * @param {import("p5")} p5 - The p5 instance
+ * @param {number} x - The x-offset from cat center
+ * @param {number} y - The y-offset from cat center
+ */
+function drawPaws(p5, x, y) {
+  const firstPawCenter = { x: catCenter.x-x, y: catCenter.y+y }
+  const secondPawCenter = { x : catCenter.x+x, y: catCenter.y+y }
+
+  p5.push();
+  p5.fill(10); // Slightly darker paws than rest of body
+  p5.stroke(50);
+
+  // First paw
+  p5.ellipse(firstPawCenter.x - 35, firstPawCenter.y, 30, 40);
+  p5.ellipse(firstPawCenter.x - 15, firstPawCenter.y, 30, 70);
+  p5.ellipse(firstPawCenter.x + 10, firstPawCenter.y, 30, 70);
+  p5.ellipse(firstPawCenter.x + 30, firstPawCenter.y, 30, 40);
+
+  // Second paw
+  p5.ellipse(secondPawCenter.x - 35, secondPawCenter.y, 30, 40);
+  p5.ellipse(secondPawCenter.x - 15, secondPawCenter.y, 30, 70);
+  p5.ellipse(secondPawCenter.x + 10, secondPawCenter.y, 30, 70);
+  p5.ellipse(secondPawCenter.x + 30, secondPawCenter.y, 30, 40);
+
+  // Claws
+  p5.fill(255);
+  // Left paw claws
+  p5.triangle(firstPawCenter.x - 43, firstPawCenter.y - 5, firstPawCenter.x - 33, firstPawCenter.y - 5, firstPawCenter.x - 38, firstPawCenter.y + 10);
+  p5.triangle(firstPawCenter.x - 22, firstPawCenter.y - 15, firstPawCenter.x - 12, firstPawCenter.y - 15, firstPawCenter.x - 18, firstPawCenter.y + 10);
+  p5.triangle(firstPawCenter.x + 3, firstPawCenter.y - 15, firstPawCenter.x + 13, firstPawCenter.y - 15, firstPawCenter.x + 7, firstPawCenter.y + 10);
+  p5.triangle(firstPawCenter.x + 23, firstPawCenter.y - 7, firstPawCenter.x + 35, firstPawCenter.y - 7, firstPawCenter.x + 29, firstPawCenter.y + 10);
+
+  // Right paw claws
+  p5.triangle(secondPawCenter.x - 43, secondPawCenter.y - 5, secondPawCenter.x - 33, secondPawCenter.y - 5, secondPawCenter.x - 38, secondPawCenter.y + 10);
+  p5.triangle(secondPawCenter.x - 22, secondPawCenter.y - 15, secondPawCenter.x - 12, secondPawCenter.y - 15, secondPawCenter.x - 18, secondPawCenter.y + 10);
+  p5.triangle(secondPawCenter.x + 3, secondPawCenter.y - 15, secondPawCenter.x + 13, secondPawCenter.y - 15, secondPawCenter.x + 7, secondPawCenter.y + 10);
+  p5.triangle(secondPawCenter.x + 23, secondPawCenter.y - 7, secondPawCenter.x + 35, secondPawCenter.y - 7, secondPawCenter.x + 29, secondPawCenter.y + 10);
+
   p5.pop();
 }
 

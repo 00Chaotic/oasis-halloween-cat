@@ -37,6 +37,13 @@ function sketch(p5) {
     // Display pre-rendered buffer
     p5.image(catGraphics, -p5.width / 2, -p5.height / 2);
 
+    // Change cursor based on mouse position
+    if (isMouseInRadius(p5, 420)) {
+      p5.cursor(p5.HAND);
+    } else {
+      p5.cursor(p5.ARROW)
+    }
+
     // Eyes
     const eyeOffset = 75;
     const eyeRadius = 75;

@@ -12,7 +12,7 @@ const catCenter = {
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  let catGraphics;
+  let catGraphics, furGraphics;
 
   p5.setup = () => {
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
@@ -23,14 +23,18 @@ function sketch(p5) {
     catGraphics.angleMode(p5.DEGREES);
 
     // Pre-render static graphics
-    drawFace(catGraphics, 520);
-    drawFur(catGraphics, 520);
     drawEars(catGraphics, 180, 180, 180, 370, 30, 250);
+    drawFace(catGraphics, 520);
+    drawFur(catGraphics, catCenter.x, catCenter.y, 520, 5000);
     drawWhiskers(catGraphics);
     drawNose(catGraphics, -25, 0, 25, 0, 0, 30, 'pink');
     drawMouth(catGraphics, 50, 30, 100, 75);
     drawFangs(catGraphics, 50, 67, 30, 65, 40, 90);
     drawPaws(catGraphics, 200, (centerToEdge.y / 2)-110);
+
+    // Create off-screen graphics buffer for fur displacement
+    furGraphics = p5.createGraphics(30, 30, p5.WEBGL);
+    drawFur(furGraphics, 0, 0, 30, 30);
   };
 
   p5.draw = () => {
@@ -53,6 +57,9 @@ function sketch(p5) {
     // Add arcs to make eyes look closed/happy when mouse is held down
     if (p5.mouseIsPressed && isMouseInRadius(p5, 263)) {
       drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, eyeRadius, 5);
+
+      // Imitate fur ruffling
+      p5.image(furGraphics, p5.mouseX - centerToEdge.x - 10, p5.mouseY - centerToEdge.y - 10);
     } else {
       drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, eyeRadius);
     }
@@ -76,18 +83,18 @@ function drawFace(p5, radius) {
  * @param {import("p5")} p5 - The p5 instance
  * @param {number} radius - Radius of cat face
  */
-function drawFur(p5, radius) {
+function drawFur(p5, x, y, radius, furStrokes) {
   p5.push();
   p5.stroke(50);
 
   // Generate fur strokes
-  for (let i = 0; i < 5000; i++) {
+  for (let i = 0; i < furStrokes; i++) {
     let angle = p5.random(0, 360); // Random angle in degrees
 
     // Random radius inside cat face using a square root for even distribution
     let r = p5.sqrt(p5.random()) * 0.5; // Scales points towards the center
-    let posX = catCenter.x + r * p5.cos(angle) * radius;
-    let posY = catCenter.y + r * p5.sin(angle) * radius;
+    let posX = x + r * p5.cos(angle) * radius;
+    let posY = y + r * p5.sin(angle) * radius;
 
     // Calculate offset for the fur strands to create outward growth
     let furLength = p5.random(2, 5); // Random length of fur strand

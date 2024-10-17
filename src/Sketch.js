@@ -281,7 +281,7 @@ function drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, radius) {
 function drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, radius) {
   p5.push();
   p5.noFill();
-  p5.strokeWeight(5);
+  p5.strokeWeight(10);
   p5.arc(leftEyeCoords.x, leftEyeCoords.y, radius, radius, 180, 360, p5.OPEN); // Left eye arc
   p5.arc(rightEyeCoords.x, rightEyeCoords.y, radius, radius, 180, 360, p5.OPEN); // Right eye arc
   p5.pop();

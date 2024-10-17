@@ -38,8 +38,10 @@ function sketch(p5) {
   };
 
   p5.draw = () => {
+    p5.clear();
+  
     // Display pre-rendered buffer
-    p5.image(catGraphics, -p5.width / 2, -p5.height / 2);
+    p5.image(catGraphics, -centerToEdge.x, -centerToEdge.y);
 
     // Change cursor based on mouse position
     if (isMouseInRadius(p5, 263)) {

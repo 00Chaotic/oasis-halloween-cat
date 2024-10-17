@@ -12,9 +12,11 @@ const catCenter = {
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  let catGraphics, furGraphics;
+  let catGraphics, furGraphics, isPurring, sounds;
 
   p5.setup = () => {
+    setupSounds();
+
     p5.createCanvas(p5.windowWidth, p5.windowHeight, p5.WEBGL);
     p5.angleMode(p5.DEGREES);
 
@@ -62,10 +64,31 @@ function sketch(p5) {
 
       // Imitate fur ruffling
       p5.image(furGraphics, p5.mouseX - centerToEdge.x - 10, p5.mouseY - centerToEdge.y - 10);
+
+      // Purring when petting cat
+      if (!isPurring) {
+        sounds.purr.play().catch((err) => console.error("Purr audio play failed: ", err));
+        isPurring = true;
+      }
     } else {
       drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, eyeRadius);
+
+      if (isPurring) {
+        sounds.purr.pause();
+        sounds.purr.currentTime = 0;
+        isPurring = false;
+      }
     }
   };
+
+  const setupSounds = () => {
+    const purrAudio = new Audio("oasis-halloween-cat/sounds/purr.mp3");
+    purrAudio.loop = true;
+
+    sounds = {
+      purr: purrAudio,
+    };
+  }
 }
 
 /**

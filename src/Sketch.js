@@ -82,7 +82,7 @@ function sketch(p5) {
   };
 
   const setupSounds = () => {
-    const purrAudio = new Audio("oasis-halloween-cat/sounds/purr.mp3");
+    const purrAudio = new Audio("sounds/purr.mp3");
     purrAudio.loop = true;
 
     sounds = {

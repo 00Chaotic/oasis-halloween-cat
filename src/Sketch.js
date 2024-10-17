@@ -38,7 +38,7 @@ function sketch(p5) {
     p5.image(catGraphics, -p5.width / 2, -p5.height / 2);
 
     // Change cursor based on mouse position
-    if (isMouseInRadius(p5, 420)) {
+    if (isMouseInRadius(p5, 263)) {
       p5.cursor(p5.HAND);
     } else {
       p5.cursor(p5.ARROW)
@@ -51,8 +51,8 @@ function sketch(p5) {
     const rightEyeCoords = { x: catCenter.x + eyeOffset, y: catCenter.y - eyeOffset };
 
     // Add arcs to make eyes look closed/happy when mouse is held down
-    if (p5.mouseIsPressed && isMouseInRadius(p5, 420)) {
-      drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, eyeRadius);
+    if (p5.mouseIsPressed && isMouseInRadius(p5, 263)) {
+      drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, eyeRadius, 5);
     } else {
       drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, eyeRadius);
     }
@@ -272,18 +272,20 @@ function drawEyesOpen(p5, leftEyeCoords, rightEyeCoords, radius) {
 }
 
 /**
- * Draws closed happy cat eyes using mirrored arcs.
+ * Draws animated closed happy cat eyes using mirrored arcs.
  * @param {import("p5")} p5 - The p5 instance
  * @param {{x: number, y: number}} leftEyeCoords - Coords for the center of the left eye
  * @param {{x: number, y: number}} rightEyeCoords - Coords for the center of the right eye
  * @param {number} radius - Radius of the eye/arcs
  */
-function drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, radius) {
+function drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, radius, bounceSpeed) {
+  const bounceOffset = p5.sin(p5.frameCount * bounceSpeed) * 10;
+
   p5.push();
   p5.noFill();
   p5.strokeWeight(10);
-  p5.arc(leftEyeCoords.x, leftEyeCoords.y, radius, radius, 180, 360, p5.OPEN); // Left eye arc
-  p5.arc(rightEyeCoords.x, rightEyeCoords.y, radius, radius, 180, 360, p5.OPEN); // Right eye arc
+  p5.arc(leftEyeCoords.x, leftEyeCoords.y + bounceOffset, radius, radius, 180, 360, p5.OPEN); // Left eye arc
+  p5.arc(rightEyeCoords.x, rightEyeCoords.y + bounceOffset, radius, radius, 180, 360, p5.OPEN); // Right eye arc
   p5.pop();
 }
 

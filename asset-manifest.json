@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/oasis-halloween-cat/static/css/main.e1de56f8.css",
-    "main.js": "/oasis-halloween-cat/static/js/main.28b72bc9.js",
+    "main.js": "/oasis-halloween-cat/static/js/main.e2eaa081.js",
     "static/js/453.57bae64b.chunk.js": "/oasis-halloween-cat/static/js/453.57bae64b.chunk.js",
     "static/media/bg.gif": "/oasis-halloween-cat/static/media/bg.bc75bbaab8312f973b46.gif",
     "index.html": "/oasis-halloween-cat/index.html",
     "main.e1de56f8.css.map": "/oasis-halloween-cat/static/css/main.e1de56f8.css.map",
-    "main.28b72bc9.js.map": "/oasis-halloween-cat/static/js/main.28b72bc9.js.map",
+    "main.e2eaa081.js.map": "/oasis-halloween-cat/static/js/main.e2eaa081.js.map",
     "453.57bae64b.chunk.js.map": "/oasis-halloween-cat/static/js/453.57bae64b.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e1de56f8.css",
-    "static/js/main.28b72bc9.js"
+    "static/js/main.e2eaa081.js"
   ]
 }

@@ -229,18 +229,28 @@ function drawMouth(p5, x, y, w, h) {
 /**
  * Draws fangs under cat mouth using mirrored triangles.
  * @param {import("p5")} p5 - The p5 instance
- * @param {number} x1 - Bottom left x offset for both triangles (mirrored)
- * @param {number} y1 - Bottom left y offset for both triangles
- * @param {number} x2 - Bottom right x offset for both triangles (mirrored)
- * @param {number} y2 - Bottom right y offset for both triangles
- * @param {number} x3 - Top x offset for both triangles (mirrored)
- * @param {number} y3 - Top y offset for both triangles
+ * @param {number} x1 - Top left x offset for both triangles (mirrored)
+ * @param {number} y1 - Top left y offset for both triangles
+ * @param {number} x2 - Top right x offset for both triangles (mirrored)
+ * @param {number} y2 - Top right y offset for both triangles
+ * @param {number} x3 - Bottom x offset for both triangles (mirrored)
+ * @param {number} y3 - Bottom y offset for both triangles
  */
 function drawFangs(p5, x1, y1, x2, y2, x3, y3) {
   p5.push();
   p5.noStroke();
+  
+  //Fangs
   p5.triangle(catCenter.x-x1, catCenter.y+y1, catCenter.x-x2, catCenter.y+y2, catCenter.x-x3, catCenter.y+y3);
   p5.triangle(catCenter.x+x1, catCenter.y+y1, catCenter.x+x2, catCenter.y+y2, catCenter.x+x3, catCenter.y+y3);
+
+  // Blood
+  const xOffset = 4;
+  const yOffset = 10;
+  p5.fill('#c20606');
+  p5.triangle(catCenter.x-(x1-xOffset), catCenter.y+(y1+yOffset), catCenter.x-(x2+xOffset), catCenter.y+(y2+yOffset), catCenter.x-x3, catCenter.y+y3);
+  p5.triangle(catCenter.x+(x1-xOffset), catCenter.y+(y1+yOffset), catCenter.x+(x2+xOffset), catCenter.y+(y2+yOffset), catCenter.x+x3, catCenter.y+y3);
+
   p5.pop();
 }
 

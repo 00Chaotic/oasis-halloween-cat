@@ -12,7 +12,7 @@ const catCenter = {
  * @param {import("p5")} p5 - The p5 instance
  */
 function sketch(p5) {
-  let catGraphics, furGraphics, isPurring, sounds;
+  let catGraphics, furGraphics, isInteracting, isPurring, sounds;
 
   p5.setup = () => {
     setupSounds();
@@ -59,7 +59,7 @@ function sketch(p5) {
     const rightEyeCoords = { x: catCenter.x + eyeOffset, y: catCenter.y - eyeOffset };
 
     // Add arcs to make eyes look closed/happy when mouse is held down
-    if (p5.mouseIsPressed && isMouseInRadius(p5, 263)) {
+    if (isInteracting && isMouseInRadius(p5, 263)) {
       drawEyesHappy(p5, leftEyeCoords, rightEyeCoords, eyeRadius, 5);
 
       // Imitate fur ruffling
@@ -81,6 +81,22 @@ function sketch(p5) {
     }
   };
 
+  p5.mousePressed = () => {
+    isInteracting = true;
+  };
+
+  p5.mouseReleased = () => {
+    isInteracting = false;
+  };
+
+  p5.touchStarted = () => {
+    isInteracting = true;
+  };
+
+  p5.touchEnded = () => {
+    isInteracting = false;
+  };
+
   const setupSounds = () => {
     const purrAudio = new Audio("sounds/purr.mp3");
     purrAudio.loop = true;
@@ -88,7 +104,7 @@ function sketch(p5) {
     sounds = {
       purr: purrAudio,
     };
-  }
+  };
 }
 
 /**
